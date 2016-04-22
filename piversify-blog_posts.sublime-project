@@ -1,0 +1,17 @@
+{
+	"folders":
+	[
+		{
+			"path": "."
+		}
+	],
+	"ignored_packages": [
+		"SublimeCodeIntel", 
+		"Vintage"
+	],
+	"settings":
+	{
+		"word_wrap": "true",
+		"auto_complete": false,
+	}
+}
