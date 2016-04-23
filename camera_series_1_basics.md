@@ -91,7 +91,7 @@ This will output a 5-second video encoded in `h.264`. You can play it by running
 
 Like `raspistill`, we can use `-vf` and `-hf` to flip the video, `-w` and `-h` to specify the resolution, and `-k` to capture multiple videos. However, `raspivid` also presents us with two new options:
 
- - `-t ms`: Time to record for. Replace ms with miliseconds.
+ - `-t ms`: Time to record for. Replace ms with milliseconds.
  - `-fps frames`: Frames per second to record. Replace frames with fps.
 
 ###Python
@@ -105,7 +105,7 @@ To wait between starting and stopping the recording, we can use the `wait_record
 
     camera.wait_recording(s)
 
-Note that this command is different to `time.sleep()` - `wait_recording()` will throw an exception and stop if any errors are found (e.g. not enough space), wheras `time.sleep()` will continue anyway.
+Note that `wait_recording()` is different to `time.sleep()`. `wait_recording()` will throw an exception and stop if any errors are found (e.g. not enough space), while `time.sleep()` will continue *even if* errors are found, potentially causing even more problems.
 
 ##Disabling the red light
 
