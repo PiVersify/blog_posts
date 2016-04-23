@@ -6,7 +6,7 @@
 
 #Camera Module Part 1: Getting started
 
-This is the first article in a 3 part series about using the Raspberry Pi Camera Module in various situations. This article is about using the basic functions of the camera in both Bash and Python; future articles will show you how to capture slo-mo, timelapse, and maybe even stream video to another device. 
+This is the first article in a series dedicated to using the Raspberry Pi Camera Module in various situations. This article is about using the basic functions of the camera in both Bash and Python; future articles will show you how to capture slo-mo, timelapse, and maybe even stream video to another device. 
 
 This article assumes you have a [Raspberry Pi Camera Module](https://www.raspberrypi.org/products/camera-module/) and a Pi with a camera port (that is, any model except the Zero). A stand for the camera is also highly recommended.
 
@@ -37,7 +37,7 @@ and use this code at the start of your program to import the module:
 
 ###Bash/Command line
 
-The basic command for taking a picture in Bash is as follows:
+The basic command for taking a picture in Bash is `raspistill`. You use it like this:
 
     $ raspistill  -o test.png
     
@@ -65,11 +65,56 @@ Finally, always close the camera before ending the script to clean up:
 
     camera.close()
 
-Here are some other useful commands:
+Here are some other useful settings:
 
-    # Specify the resolution
-    camera.resolution = (640, 480) 
-    # Start or stop the preview. Use Ctrl+C to stop the preview manually
-    camera.start_preview()
-    camera.stop_preview()
+ - Specify the resolution in pixels along the x and y axis.
+       camera.resolution = (x, y) 
+ - Start or stop the preview. Use `Ctrl+C` to stop the preview manually.
+       camera.start_preview()
+       camera.stop_preview()
+ - Insert a delay before/between captures. Replace `s` with seconds.
+       from time import sleep
+       sleep(s)
+
+
+##Capturing Videos
+
+###Bash/Command line
+
+To capture videos, we use the `raspivid` command. Like `raspistill`, we use the `-o` flag and a filename to output our video:
+
+    raspivid -o vid.mp4
+
+This will output a 5-second video encoded in `h.264`. You can play it by running:
+
+    omxplayer vid.mp4
+
+Like `raspistill`, we can use `-vf` and `-hf` to flip the video, `-w` and `-h` to specify the resolution, and `-k` to capture multiple videos. However, `raspivid` also presents us with two new options:
+
+ - `-t ms`: Time to record for. Replace ms with miliseconds.
+ - `-fps frames`: Frames per second to record. Replace frames with fps.
+
+###Python
+
+We can use the following commands to start or stop a recording:
     
+    camera.start_recording('vid.mp4')
+    camera.stop_recording
+    
+To wait between starting and stopping the recording, we can use the `wait_recording` command (where s is seconds):
+
+    camera.wait_recording(s)
+
+Note that this command is different to `time.sleep()` - `wait_recording()` will throw an exception and stop if any errors are found (e.g. not enough space), wheras `time.sleep()` will continue anyway.
+
+##Disabling the red light
+
+You may notice that whenever the camera is recording, a red LED is turned on. If you want this turned off (e.g. you are using the Pi as a wildlife cam or the light is reflecting off shiny objects), [edit your Pi's](http://elinux.org/R-Pi_configuration_file#How_to_edit_from_the_Raspberry_Pi) `config.txt` to add the following line:
+
+    disable_camera_led=1
+
+##Further Reading
+
+ - Run the `raspistill` and `raspivid` commands without any parameters to find all flags and settings, including changing the brightness, exposure, contrast, saturation, etc.
+ - Read the [picamera documentation](https://picamera.readthedocs.org/en/release-1.10/index.html) for additional examples and settings for controlling the camera via Python
+ - The Raspberry Pi website has [documentation and tutorials](https://www.raspberrypi.org/documentation/usage/camera/README.md) for both [Bash](https://www.raspberrypi.org/documentation/usage/camera/raspicam/README.md) and [Python](https://www.raspberrypi.org/documentation/usage/camera/python/README.md).
