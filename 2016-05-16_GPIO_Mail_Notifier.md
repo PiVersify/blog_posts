@@ -17,9 +17,18 @@ First, you will need:
 Step 1:
 --
 
-First of all, you'll have to do some things in your G-Mail account. If you have 2-Factor Authentication on, you'll need to make sure you generate an app password to use with this little script. After you've done that, or if you don't even have 2-Factor on, you'll need to create three labels that you'll want to keep an eye on. For example, you can make the labels `Work`, `School`, and `Mom`. Then, you'll have to set-up filters in your account so that emails get sorted into those labels according. For example, you can set-up a filter that sorts all mail from `*@boringwork.email` to go into the `Work` category.
+First of all, you'll have to do some things in your G-Mail account. If you have 2-Factor Authentication on, you'll need to make sure you generate an app password to use with this little script. After you've done that, or if you don't even have 2-Factor on, you'll need to create three labels that you'll want to keep an eye on. For example, you can make the labels `Work`, `School`, and `Mom`. Then, you'll have to set-up filters in your account so that emails get sorted into those labels accordingly. For example, you can set-up a filter that sorts all mail from `*@boringwork.email` to go into the `Work` category.
 
 Step 2:
+--
+
+Here, you'll need to set-up the electronics components. Here is how I have mine set-up. Sorry about the messiness of it, I did my best :P
+
+![GPIO Set-up](https://raw.githubusercontent.com/brownsnake/blog_posts/master/images/GPIOMail.png "GPIO Set-up")
+
+Basically, I have GPIO Pin 2 attached to the anode end of my green LED, with a resistor connecting the cathode to ground. Yellow is attached to GPIO Pin 3, and Red is attached to GPIO Pin 4. Again, make sure that you have resistors connecting the cathode legs to ground to avoid burning out your LEDs. If you don't know which leg is anode and which leg is cathode, it's helpful to remember that there is a flat edge at the base of the LED's plastic bulb on the cathode side. Also, the cathode leg is *usually* longer than the anode leg. However, this is not always the case, so it's safer to look for the flat edge.
+
+Step 3:
 --
 
 Alright, here's the fun part. the script. You'll have to modify a couple of the lines yourself to fit the labels you made, but it's fairly straightforward. Copy and paste the entire script below to a new file named `mail-indicator.py`:
