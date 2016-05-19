@@ -16,6 +16,8 @@ So, wait, what exactly *is* a LAMP stack? Well, LAMP is an acronym for **L**inux
 L is for Linux
 --
 
+**Note:** If you already have a version of Raspbian installed, you can skip this section entirely and move down to "A is for Apache".
+
 Alright, so after you've downloaded your preferred distribution of Raspbian, you'll need to get it installed. We won't be covering NOOBS here, as that is a fairly straight-forward process. Instead, we'll assume you downloaded a file that ends in .iso or .img. These types of files are called disk images, and they hold a copy of the entire operating system in them. If you're on Windows, you'll want to use a tool called [Rufus](https://rufus.akeo.ie/) to copy the image onto your card. The standard guide suggests using wind32diskimager. This is a good tool, too. However, I have had issues with it in the past as far as it not copying over the entire image and exiting early. Also, Rufus has a portable version which requires no installation. Ultimately, it is up to you which tool you choose. However, if you're on Linux or Macintosh, you'll want to open up a terminal. You'll need to figure out what device file your SD card is identified by. Usually, it will be `/dev/mmcblk0`, but it might be different depending on your system. To see a list of attached devices, you can use `lsblk`. If your card is split into multiple partitions, you might see entries like `mmcblk0p1` or `mmcblk0p2`. That is okay, but you don't want to use those. When issuing the next command, you'll want to make sure that you are using the top-level identifier (the one without a `p` in it):
 
     sudo dd if=/path/to/raspbian.img of=/dev/mmcblk0
