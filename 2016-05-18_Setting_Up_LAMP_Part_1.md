@@ -1,7 +1,9 @@
-Setting up a LAMP stack on a Raspberry Pi
+Setting up a LAMP stack on a Raspberry Pi - Part 1:
 ==
+Local Intranet Site
+--
 
-The Raspberry Pi is great, we all know that. But, what is it great for? I have found that it can be a really efficient, low-cost, personal web server. With this running, you can host anything from a blog, to a personal page, to an online résumé without worrying about your data being stored on somebody else's servers. A few notes, though. First, you'll have to check with your ISP to make sure you're allowed to do this. Although less common these days, you'll still run into an ISP that blocks ports 80 and 443, the ports used for HTTP/HTTPS respectively. Second, if your ports are open as they should be, you'll also want to set-up port-forwarding in your router as well as a static IP for your Pi. This process varies from router to router, so I won't go into detail here. Just search on Google "Your-Router-Model port forwarding" and you'll be able to find tons of resources. Finally, after you've got the ports opened and forwarded, you'll want to make sure you can easily access your server remotely. Usually, this is done by purchasing a domain name and pointing it to your public IP. If you don't want to purchase a domain name, you have a few options. You can: a) just remember your public IP and type it in each time, b) get a free domain name from [Freenom](https://www.freenom.com), or c) Use a DynamicDNS service like [No-IP](https://www.noip.com) to get a free sub-domain. If you choose the Freenom route, be aware that they have some rules of their own and may take down your site if they don't like it for whatever reason. With all of this in mind, let's begin.
+The Raspberry Pi is great, we all know that. But, what is it great for? I have found that it can be a really efficient, low-cost, personal web server. With this running, you can host anything from a blog, to a personal page, to an online résumé without worrying about your data being stored on somebody else's servers. This is the first in a two part series, and will cover setting up a local web-server accessible through your local network only. It will get your server up off the ground, but it won't dive into hardening it against attacks or opening it up to the world. In part 2, we will go over how to make your server accessible over the internet, as well as how to make it secure and stop attackers from getting in. Let's start in on setting up your LAMP stack.
 
 Prerequisites
 --
@@ -46,16 +48,21 @@ That's it! To make sure it's working, open up a web browser and type in the IP o
     chown -R www-data: /var/www/html/mysite #This makes it so that the directory is owned by the webserver user
     chmod -R 755 /var/www/html/mysite #This sets more secure permissions on the folder
     
-Now, you'll want to create an actual config file for Apache to use. Open up a new file in your favorite text-editor and copy/paste the contents below and make the necessary modifications:
+Now, you'll want to create an actual config file for Apache to use. First, disable this default site, as we will be making changes to it.
+
+    a2dissite 000-default
+    service apache2 reload
+    
+Next, open up the file `/etc/apache2/sites-available/000-default.conf in your favorite text-editor. Delete everything that's in there and copy/paste the contents below and make the necessary modifications, or compare the current contents to what I have below and see for yourself how to make the changes:
 
 ```apache
 <VirtualHost *:80>
 
-        #ServerName is the domain name that will trigger this config file. It will be whatever domain name you set-up in the prerequisites section.
+        #ServerName is the domain name that will trigger this config file. We will go into this more in part 2. For now, you can set it to whatever you want, as you will be accessing this site through IP only.
         ServerName yourdomain.tld
-        #ServerAlias is optional. If you bought "example.com", that would be your ServerName. However, you also want "www.example.com" to trigger this site. That's what ServerAlias is for.
+        #ServerAlias is optional. Again, we will cover more of this in part 2.
         ServerAlias www.yourdomain.tld
-        #ServerAdmin is the email address of the server administrator.
+        #ServerAdmin is the email address of the server administrator. This won't work quite yet, but we'll leave it in here so that we can talk about how to make it work in part 2
         ServerAdmin you@email.com
         #DocumentRoot is the folder where your website files are stored.
         DocumentRoot /var/www/html/mysite
@@ -66,12 +73,12 @@ Now, you'll want to create an actual config file for Apache to use. Open up a ne
 </VirtualHost>
 ```
 
-Save that file as `/etc/apache2/sites-available/mysite.conf`. Now, tell Apache to use that site:
+Save that file as is. Now, tell Apache to use that site:
 
-    a2ensite mysite
+    a2ensite 000-default
     service apache2 reload
     
-Now, open up your web browser and try navigating to your domain. Since you're no longer using the original file, you'll just see a plain page listing the nonexistent files. You can add your web site files into here later on, and they'll be displayed.
+Now, open up your web browser and try navigating to your pi's IP again. Since you're no longer using the original file, you'll just see a plain page listing the nonexistent files. You can add your web site files into here later on, and they'll be displayed.
 
 M is for MySQL
 --
@@ -102,20 +109,9 @@ phpinfo();
 ?>
 ```
 
-Save that as `/var/www/html/mysite/info.php`. Then, open up your browser and go to `http://yourdomain.tld/info.php` and you should see the PHP info page that tells you information about your system. You're done!
+Save that as `/var/www/html/mysite/info.php`. Then, open up your browser and go to `http://your.pi.ip/info.php` and you should see the PHP info page that tells you information about your system. You're done! After verifying that PHP works, it will be very wise of you to delete the `info.php` file you just created, as it gives away a lot of information. If it's still there when we get this opened up to the internet, an attacker will have most of what they need to know about your system to exploit it.
 
-Optional, but recommended
+Finished!
 --
 
-Now, you can stop reading the guide here and just go on developing your website however you like. However, I'm going to suggest you follow the next step. The Internet is a big, scary place. Using standard HTTP is insecure, and you leave yourself and your visitors open if you aren't using HTTPS. It used to be that enabling HTTPS required you purchasing an SSL certificate, changing settings in your web-server, and other complicated stuff. However, [Let's Encrypt](https://letsencrypt.org) seeks to change that and enable HTTPS access for anyone. If you're still the `root` user, go ahead and type `exit` to get back to being the `pi` user. I find it easier to access the Let's Encrypt software from `pi` because of how uncomplicated it all is. First, you'll need to make sure that `git` is installed:
-
-    sudo apt-get install git
-    
-Now, we'll get the Let's Encrypt application and set it all up:
-
-    cd
-    git clone https://github.com/certbot/certbot
-    cd certbot
-    ./certbot-auto --apache
-    
-This utility will guide you through the process. It's really simple, and it will even detect what sites you have configured on Apache. Just press `enter` through the prompts, selecting what you want, and you're done! Now you have a fully functional LAMP stack with HTTPS enabled!
+You did it! This web-server can now serve any type of file to computers in your local network. This set-up would be good for a home intranet site, or to provide you some sort of local gateway to controlling your connected devices. Stay tuned for part 2, in which we will cover hardening the server and making it accessible to the world!
