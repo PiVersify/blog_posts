@@ -41,7 +41,7 @@ and change them to:
 HISTSIZE=10000<br />
 HISTFILESIZE=20000.
 
-Save the file (ctrl-o) and exit (ctrl-x) the editor. Reload the ~./bashrc file (source ~/.bashrc) to update the values. 
+Save the file `ctrl-o` and exit `ctrl-x` the editor. Reload the ~./bashrc file `source ~/.bashrc` to update the values. 
 
 This is better but only delays the length of time before we begin losing older commands from history. To prevent this and avoid the performance hit of setting an unlimited history size, we can keep a full list of commands in a file that is not loaded automatically when Bash starts. To do this we can add the following to our .bashrc file.
 
@@ -100,7 +100,7 @@ fi
 shopt -s histappend
 </pre>
 
-Save the file (ctrl-o) and exit (ctrl-x) the editor. Reload the ~./bashrc file to reload the new configuration. 
+Save the file `ctrl-o` and exit `ctrl-x` the editor. Reload the ~./bashrc file to reload the new configuration. 
 
 This will save commands to a file (~/.bash_eternal_history). You can test the changes by entering a few commands:
 
@@ -136,6 +136,6 @@ Next time you need to remove a PID file to restart a program, or restart a progr
 
 Additional Resources
 
-[How to use Bash History Commands and Expansions](https://www.digitalocean.com/community/tutorials/how-to-use-bash-history-commands-and-expansions-on-a-linux-vps)<br />
-[The Definitive Guide to Bash Command Line History](http://www.catonmat.net/blog/the-definitive-guide-to-bash-command-line-history/)<br />
-[Understanding Bash History](http://www.symkat.com/understanding-bash-history)
+*[How to use Bash History Commands and Expansions](https://www.digitalocean.com/community/tutorials/how-to-use-bash-history-commands-and-expansions-on-a-linux-vps)<br />
+*[The Definitive Guide to Bash Command Line History](http://www.catonmat.net/blog/the-definitive-guide-to-bash-command-line-history/)<br />
+*[Understanding Bash History](http://www.symkat.com/understanding-bash-history)
