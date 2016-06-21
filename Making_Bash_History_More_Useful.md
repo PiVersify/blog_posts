@@ -136,6 +136,12 @@ Next time you need to remove a PID file to restart a program, or restart a progr
 
 Additional Resources
 
+<<<<<<< HEAD
 *[How to use Bash History Commands and Expansions](https://www.digitalocean.com/community/tutorials/how-to-use-bash-history-commands-and-expansions-on-a-linux-vps)<br />
 *[The Definitive Guide to Bash Command Line History](http://www.catonmat.net/blog/the-definitive-guide-to-bash-command-line-history/)<br />
 *[Understanding Bash History](http://www.symkat.com/understanding-bash-history)
+=======
++[How to use Bash History Commands and Expansions](https://www.digitalocean.com/community/tutorials/how-to-use-bash-history-commands-and-expansions-on-a-linux-vps)<br />
++[The Definitive Guide to Bash Command Line History](http://www.catonmat.net/blog/the-definitive-guide-to-bash-command-line-history/)<br />
++[Understanding Bash History](http://www.symkat.com/understanding-bash-history)
+>>>>>>> cd6962815ebf17156693bfacee5aadd6c5676299
