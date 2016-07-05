@@ -25,7 +25,7 @@ Configure git for the root account:
 **sudo git config --global user.name "Your Name" <br />
 sudo git config --global user.email youremailaddress**
 
-Configure git for your normal account. While not necessary for etckeeper this ensures that it is configured when you use git for your personal projects, you do version control your code don’t you?
+Configure git for your normal account. While not necessary for etckeeper this ensures that it is configured when you use git for your personal projects, you do version control your code don’t you? You need to switch to your home directory before doing this, and switch back to /etc after.
 
 **git config --global user.name "Your Name" <br />
 git config --global user.email youremailaddress**
