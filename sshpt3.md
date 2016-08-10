@@ -36,7 +36,7 @@ and exit the editor:
 
 Next we need to edit the **/etc/issue.net** file.
 
-**sudo /etc/issue.net**
+**sudo nano /etc/issue.net**
 
 This file currently contains the following text:
 
