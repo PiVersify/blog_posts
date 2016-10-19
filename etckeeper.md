@@ -32,7 +32,7 @@ git config --global user.email youremailaddress**
 
 Install etckeeper:
 
-**Sudo apt-get install etckeeper**
+**sudo apt-get install etckeeper**
 
 Because git is already installed this will not only install etckeeper, but initialize the database and make an initial commit of the files in /etc.
 
